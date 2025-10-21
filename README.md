@@ -13,7 +13,7 @@ Crie um arquivo .env na raiz do backend e preencha os seguintes campos:
 
 PORT=
 
-### URL de conexão com o banco de dados (ex: PostgreSQL, MySQL, etc.)
+### URL de conexão com o banco de dados PostgreSQL
 
 DATABASE_URL=
 

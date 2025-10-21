@@ -1,19 +1,17 @@
 import { Controller, Get, HttpCode } from '@nestjs/common';
-import { GetSubscriptionStatusService } from './get-subscription-status.service';
+import { GetSubscriptionService } from './get-subscription.service';
 import { Roles } from '@/modules/authorization/infra/http/decorators/roles.decorator';
 import { Role } from '@/modules/authorization/core/roles.enum';
 import { UserId } from '@/modules/authentication/infra/http/decorators/get-user-id.decorator';
 
-@Controller('/payments/subscription-status')
-export class GetSubscriptionStatusController {
-  constructor(
-    private getSubscriptionStatusService: GetSubscriptionStatusService,
-  ) {}
+@Controller('/payments/subscription')
+export class GetSubscriptionController {
+  constructor(private getSubscriptionService: GetSubscriptionService) {}
 
   @Get()
   @Roles(Role.USER)
   @HttpCode(200)
   async handle(@UserId() userId: string) {
-    return this.getSubscriptionStatusService.execute(userId);
+    return this.getSubscriptionService.execute(userId);
   }
 }

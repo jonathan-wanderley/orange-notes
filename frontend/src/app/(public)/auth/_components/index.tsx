@@ -15,62 +15,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LoginTab from "./tabs/login";
 import RegisterTab from "./tabs/register";
-// import { toast } from "@/hooks/use-toast";
 
 const Auth = () => {
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
-  const [registerEmail, setRegisterEmail] = useState("");
-  const [registerPassword, setRegisterPassword] = useState("");
-  const [registerConfirmPassword, setRegisterConfirmPassword] = useState("");
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!loginEmail || !loginPassword) {
-      // toast({
-      //   title: "Erro",
-      //   description: "Preencha todos os campos",
-      //   variant: "destructive",
-      // });
-      return;
-    }
-    // toast({
-    //   title: "Login realizado!",
-    //   description: "Você será redirecionado...",
-    // });
-  };
-
-  const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!registerEmail || !registerPassword || !registerConfirmPassword) {
-      // toast({
-      //   title: "Erro",
-      //   description: "Preencha todos os campos",
-      //   variant: "destructive",
-      // });
-      return;
-    }
-    if (registerPassword !== registerConfirmPassword) {
-      // toast({
-      //   title: "Erro",
-      //   description: "As senhas não coincidem",
-      //   variant: "destructive",
-      // });
-      return;
-    }
-    // toast({
-    //   title: "Cadastro realizado!",
-    //   description: "Você será redirecionado...",
-    // });
-  };
-
-  const handleGoogleLogin = () => {
-    // toast({
-    //   title: "Login com Google",
-    //   description: "Redirecionando para o Google...",
-    // });
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -91,7 +37,7 @@ const Auth = () => {
         <Tabs defaultValue="login" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="login">Login</TabsTrigger>
-            <TabsTrigger value="register">Cadastro</TabsTrigger>
+            <TabsTrigger value="register">Register</TabsTrigger>
           </TabsList>
 
           <TabsContent value="login">

@@ -13,6 +13,10 @@ export class GenerateCheckoutController {
   @Roles(Role.USER)
   @HttpCode(200)
   async handle(@Body() body: GenerateCheckoutDTO, @UserId() userId: string) {
-    return this.generateCheckoutService.execute(userId, body.planId);
+    return this.generateCheckoutService.execute(
+      userId,
+      body.planId,
+      body.returnBaseUrl,
+    );
   }
 }

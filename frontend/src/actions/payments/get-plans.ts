@@ -1,16 +1,11 @@
 "use server";
 
+import { Price } from "@/lib/types/price";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 interface ResponseDto {
-  hasSubscription: boolean;
-  plans: {
-    id: string;
-    period: "month" | "year" | undefined;
-    totalInCents: number | null;
-    isActive: boolean;
-  }[];
+  data: Price[];
 }
 
 export default async function getPlansAction() {

@@ -1,15 +1,14 @@
 "use server";
 
+import { Subscription } from "@/lib/types/subscription";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 interface ResponseDto {
-  isActive: boolean;
-  status?: string;
-  currentPeriodEnd?: string;
+  data: Subscription | null;
 }
 
-export default async function getSubscriptionStatusAction() {
+export default async function getSubscriptionAction() {
   const localCookies = await cookies();
   const token = localCookies.get("token")?.value;
 
@@ -17,7 +16,7 @@ export default async function getSubscriptionStatusAction() {
     redirect("/auth");
   }
 
-  const url = `${process.env.API_URL}/payments/subscription-status`;
+  const url = `${process.env.API_URL}/payments/subscription`;
 
   const response = await fetch(url, {
     method: "GET",

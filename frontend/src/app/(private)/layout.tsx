@@ -2,6 +2,7 @@ import Logout from "@/components/layout/logout";
 import { Button } from "@/components/ui/button";
 import { CreditCardIcon, FileTextIcon } from "lucide-react";
 import Link from "next/link";
+import UserRegion from "@/components/layout/user-region";
 
 interface Props {
   children: React.ReactNode;
@@ -56,7 +57,8 @@ export default async function PrivateLayout({ children }: Props) {
                 </Link>
               </nav>
             </div>
-            <div className="mr-2">
+            <div className="mr-2 flex items-center gap-2">
+              <UserRegion />
               <Logout />
             </div>
           </div>

@@ -36,19 +36,19 @@ export default function LoginTab() {
     try {
       await loginAction(data);
 
-      toast.success("Login realizado com sucesso");
+      toast.success("Login Successfully");
       router.push("/notes");
     } catch (err) {
-      toast.error("Falha no login. Verifique suas credenciais.");
+      toast.error("Failed to login. Please check your credentials.");
     }
   };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Entrar</CardTitle>
+        <CardTitle>Login</CardTitle>
         <CardDescription>
-          Entre com sua conta para acessar suas notas
+          Login to your account to access your notes
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -58,7 +58,7 @@ export default function LoginTab() {
           noValidate
         >
           <div className="space-y-2">
-            <Label htmlFor="login-email">Email</Label>
+            <Label htmlFor="login-email">Email Address</Label>
             <Input
               id="login-email"
               type="email"
@@ -74,7 +74,7 @@ export default function LoginTab() {
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="login-password">Senha</Label>
+            <Label htmlFor="login-password">Password</Label>
             <Input
               id="login-password"
               type="password"
@@ -91,7 +91,7 @@ export default function LoginTab() {
           </div>
 
           <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Entrando..." : "Entrar"}
+            {isSubmitting ? "Logging in..." : "Login"}
           </Button>
         </form>
       </CardContent>

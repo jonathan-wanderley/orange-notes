@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext, useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -23,27 +23,25 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Check, CreditCardIcon, Crown, FileTextIcon, Mail } from "lucide-react";
-import Link from "next/link";
+import { Mail } from "lucide-react";
 import { AuthContext } from "@/contexts/auth";
-import createStripeCheckoutAction from "@/actions/payments/create-stripe-checkout";
-import PlanCard from "./plan-card";
+import { Price } from "@/lib/types/price";
+import PriceCard from "./price-card";
+import FreePriceCard from "./free-price-card";
+import { Subscription } from "@/lib/types/subscription";
 
 interface Props {
-  data: {
-    hasSubscription: boolean;
-    plans: {
-      id: string;
-      period: "month" | "year" | undefined;
-      totalInCents: number | null;
-      isActive: boolean;
-    }[];
-  };
+  data: Price[];
+  subscription: Subscription | null;
 }
 
-const Payments = ({ data }: Props) => {
+const Payments = ({ data, subscription }: Props) => {
   const { user } = useContext(AuthContext);
   const [isPro, setIsPro] = useState(false);
+  const currentSubscriptionPriceId =
+    subscription && subscription.status === "ACTIVE"
+      ? subscription.stripeSubscriptionPriceId
+      : null;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/30">
@@ -57,23 +55,14 @@ const Payments = ({ data }: Props) => {
 
         <div className="grid gap-6 md:grid-cols-3 mb-8">
           {/* Free Plan Card */}
-          <PlanCard
-            type="free"
-            isActive={false}
-            hasAnySubscription={data.hasSubscription}
-            planId={"free"}
-            totalInCents={0}
-          />
+          <FreePriceCard isActive={!currentSubscriptionPriceId} />
 
           {/* Pro Plan Card */}
-          {data.plans.map((plan, i) => (
-            <PlanCard
+          {data.map((price, i) => (
+            <PriceCard
               key={i}
-              type={plan.period!}
-              isActive={plan.isActive}
-              hasAnySubscription={data.hasSubscription}
-              planId={plan.id}
-              totalInCents={plan.totalInCents!}
+              data={price}
+              currentSubscriptionPriceId={currentSubscriptionPriceId}
             />
           ))}
         </div>

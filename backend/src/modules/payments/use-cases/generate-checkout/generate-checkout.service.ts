@@ -7,7 +7,7 @@ import { stripe } from '../../shared/stripe';
 export class GenerateCheckoutService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async execute(userId: string, planId: string) {
+  async execute(userId: string, planId: string, returnBaseUrl: string) {
     const user = await this.prismaService.user.findUnique({
       where: {
         id: userId,
@@ -35,8 +35,8 @@ export class GenerateCheckoutService {
           },
         ],
         mode: 'subscription',
-        success_url: `http://localhost:3000/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `http://localhost:3000/checkout/?canceled=true`,
+        success_url: `${returnBaseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${returnBaseUrl}/payments`,
         customer: user.stripeCustomerId || undefined,
         customer_email: user.stripeCustomerId ? undefined : user.email,
         metadata: {

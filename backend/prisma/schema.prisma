@@ -11,11 +11,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Region {
+  brazil
+  united_states
+  europe
+  other
+}
 model User {
   id               String    @id @default(uuid())
   name             String
   email            String    @unique
   password         String
+  region           Region    @default(united_states)
   stripeCustomerId String?   @unique @map("stripe_customer_id")
   createdAt        DateTime  @default(now()) @map("created_at")
   updatedAt        DateTime  @updatedAt() @map("updated_at")
@@ -68,6 +75,7 @@ model Subscription {
   id                   String             @id @default(uuid())
   userId               String             @unique @map("user_id")
   stripeSubscriptionId String             @unique @map("stripe_subscription_id")
+  stripeSubscriptionPriceId String @map("stripe_subscription_price_id")
   status               SubscriptionStatus @map("status")
   currentPeriodEnd     DateTime           @map("current_period_end")
   createdAt            DateTime           @default(now()) @map("created_at")

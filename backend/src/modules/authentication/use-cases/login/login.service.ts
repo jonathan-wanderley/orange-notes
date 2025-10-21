@@ -3,11 +3,13 @@ import { AuthenticationRepository } from '../../repositories/authentication.repo
 import { LoginDTO } from '../../dtos/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcryptjs';
+import { Region } from '@prisma/client';
 
 interface TokenUserPayload {
   id: string;
   email: string;
   name: string;
+  region: Region;
   roles: string[];
 }
 
@@ -34,6 +36,7 @@ export class LoginService {
       id: user.id,
       name: user.name,
       email: user.email,
+      region: user.region,
       roles: user.roles.map((role) => role.role.name),
     });
 

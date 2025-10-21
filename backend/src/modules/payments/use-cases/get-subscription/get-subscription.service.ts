@@ -1,9 +1,8 @@
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
-import { SubscriptionStatus } from '@prisma/client';
 
 @Injectable()
-export class GetSubscriptionStatusService {
+export class GetSubscriptionService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async execute(userId: string) {
@@ -18,16 +17,22 @@ export class GetSubscriptionStatusService {
 
     if (!user!.subscription) {
       return {
-        isActive: false,
+        data: null,
       };
     }
 
-    const subscription = user!.subscription;
+    const { id, status, currentPeriodEnd, stripeSubscriptionPriceId } =
+      user!.subscription;
+
+    console.log({ id, status, currentPeriodEnd, stripeSubscriptionPriceId });
 
     return {
-      isActive: subscription.status === SubscriptionStatus.ACTIVE,
-      status: subscription.status,
-      currentPeriodEnd: subscription.currentPeriodEnd,
+      data: {
+        id,
+        status,
+        currentPeriodEnd,
+        stripeSubscriptionPriceId,
+      },
     };
   }
 }

@@ -1,10 +1,10 @@
 import getAllNotesAction from "@/actions/notes/get-all-notes";
 import Notes from "./_components";
-import getSubscriptionStatusAction from "@/actions/payments/get-subscription-status";
+import getSubscriptionAction from "@/actions/payments/get-subscription";
 
 export default async function NotesPage() {
   const data = await getAllNotesAction();
-  const subscriptionStatus = await getSubscriptionStatusAction();
+  const subscription = await getSubscriptionAction();
 
-  return <Notes data={data} subscriptionStatus={subscriptionStatus} />;
+  return <Notes data={data} subscription={subscription.data} />;
 }

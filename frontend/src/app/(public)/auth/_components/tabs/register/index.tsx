@@ -15,10 +15,18 @@ import registerAction from "@/actions/auth/register";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
+const regionOptions = [
+  { value: "brazil", label: "🇧🇷 Brazil" },
+  { value: "united_states", label: "🌎 United States" },
+  { value: "europe", label: "🇪🇺 Europe" },
+  { value: "other", label: "🌐 Other" },
+];
+
 const registerSchema = z.object({
   name: z.string().min(2, "O nome deve conter no mínimo 2 caracteres"),
   email: z.string().email("Email inválido"),
   password: z.string().min(6, "A senha deve conter no mínimo 6 caracteres"),
+  region: z.enum(["brazil", "united_states", "europe", "other"]),
 });
 
 type RegisterFormInputs = z.infer<typeof registerSchema>;
@@ -31,6 +39,9 @@ export default function RegisterTab() {
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormInputs>({
     resolver: zodResolver(registerSchema),
+    defaultValues: {
+      region: "united_states",
+    },
   });
 
   const onSubmit = async (data: RegisterFormInputs) => {
@@ -47,9 +58,9 @@ export default function RegisterTab() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Criar Conta</CardTitle>
+        <CardTitle>Create Account</CardTitle>
         <CardDescription>
-          Crie uma conta para começar a usar o Orange Notes
+          Create an account to start using Orange Notes
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -59,11 +70,11 @@ export default function RegisterTab() {
           noValidate
         >
           <div className="space-y-2">
-            <Label htmlFor="register-name">Nome</Label>
+            <Label htmlFor="register-name">Name</Label>
             <Input
               id="register-name"
               type="text"
-              placeholder="Seu nome"
+              placeholder="Your name"
               autoComplete="name"
               {...register("name")}
               aria-invalid={!!errors.name}
@@ -73,11 +84,11 @@ export default function RegisterTab() {
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="register-email">Email</Label>
+            <Label htmlFor="register-email">Email Address</Label>
             <Input
               id="register-email"
               type="email"
-              placeholder="seu@email.com"
+              placeholder="your@email.com"
               autoComplete="email"
               {...register("email")}
               aria-invalid={!!errors.email}
@@ -89,7 +100,7 @@ export default function RegisterTab() {
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="register-password">Senha</Label>
+            <Label htmlFor="register-password">Password</Label>
             <Input
               id="register-password"
               type="password"
@@ -104,8 +115,29 @@ export default function RegisterTab() {
               </p>
             )}
           </div>
+          <div className="space-y-2">
+            <Label htmlFor="register-region">Region</Label>
+            <select
+              id="register-region"
+              {...register("region")}
+              className="block w-full rounded-md border border-input bg-background px-3 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              aria-invalid={!!errors.region}
+              defaultValue="other"
+            >
+              {regionOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            {errors.region && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.region.message}
+              </p>
+            )}
+          </div>
           <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Criando..." : "Criar Conta"}
+            {isSubmitting ? "Creating..." : "Create Account"}
           </Button>
         </form>
       </CardContent>

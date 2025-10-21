@@ -28,13 +28,14 @@ export class PrismaAuthenticationRepository
     });
   }
 
-  async createAccount({ email, name, password }: CreateAccountDTO) {
+  async createAccount({ email, name, password, region }: CreateAccountDTO) {
     return await this.prismaService.$transaction(async (tx) => {
       const user = await tx.user.create({
         data: {
           email,
           name,
           password,
+          region,
         },
       });
 
@@ -57,6 +58,7 @@ export class PrismaAuthenticationRepository
         id: user.id,
         name: user.name,
         email: user.email,
+        region: user.region,
       };
     });
   }

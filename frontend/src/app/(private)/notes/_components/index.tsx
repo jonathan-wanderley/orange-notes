@@ -2,34 +2,28 @@
 
 import NoteCard from "./note-card";
 import { Note } from "@/lib/types/note";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { CreditCardIcon, FileTextIcon } from "lucide-react";
 import AddNoteDialog from "./dialogs/add-note";
+import { Subscription } from "@/lib/types/subscription";
 
 interface Props {
   data: Note[];
-  subscriptionStatus: {
-    isActive: boolean;
-    status?: string;
-    currentPeriodEnd?: string;
-  };
+  subscription: Subscription | null;
 }
 
-export default function Notes({ data, subscriptionStatus }: Props) {
+export default function Notes({ data, subscription }: Props) {
+  const isActiveSubscription = subscription && subscription.status === "ACTIVE";
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/30">
       <div className="container mx-auto px-4 py-4 flex justify-between">
         <div className="flex items-center gap-2">
           <p className="text-sm text-muted-foreground">
-            {!subscriptionStatus.isActive
+            {!isActiveSubscription
               ? `Free plan - ${data.length}/10 notes`
               : `Pro plan - ${data.length} notes`}
           </p>
         </div>
-        <AddNoteDialog
-          disabled={!subscriptionStatus.isActive && data.length >= 10}
-        />
+        <AddNoteDialog disabled={!isActiveSubscription && data.length >= 10} />
       </div>
       <main className="container mx-auto px-4 py-8 pt-0">
         {data.length === 0 ? (

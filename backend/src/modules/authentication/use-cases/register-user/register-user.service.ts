@@ -1,5 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { Region, User } from '@prisma/client';
 import { RegisterUserDTO } from '../../dtos/register-user.dto';
 import bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
@@ -9,6 +9,7 @@ interface TokenUserPayload {
   id: string;
   email: string;
   name: string;
+  region: Region;
   roles: string[];
 }
 
@@ -20,7 +21,7 @@ export class RegisterUserService {
   ) {}
 
   async execute(dto: RegisterUserDTO): Promise<any | User> {
-    const { password, email, name } = dto;
+    const { password, email, name, region } = dto;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -28,6 +29,7 @@ export class RegisterUserService {
       email,
       name,
       password: hashedPassword,
+      region,
     });
 
     if (!registeredUser) {
@@ -40,7 +42,8 @@ export class RegisterUserService {
       id: registeredUser.id as string,
       email: registeredUser.email,
       name: registeredUser.name,
-      roles: ['COLABORADOR'],
+      region: registeredUser.region,
+      roles: ['USER'],
     });
 
     return {

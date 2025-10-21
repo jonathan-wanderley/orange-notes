@@ -134,6 +134,6 @@ O frontend será iniciado (geralmente em http://localhost:3000).
 
 - Optaria por usar Zustand no projeto, como meu boilerplate já vinha com a ContextAPI na parte de auth, não tive tempo de atualizar isso e segui pelo o que era mais rápido.
 
-- Não consegui deixar reponsivo pra mobile a tempo, faltou um menu dedicado para dispositivos móveis e ajuste de widths dos componentes
+- Não consegui deixar reponsivo para mobile a tempo, faltou um menu dedicado para dispositivos móveis e ajuste de widths dos componentes
 
 ```

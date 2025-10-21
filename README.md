@@ -128,6 +128,8 @@ O frontend será iniciado (geralmente em http://localhost:3000).
 ```
 - Lógica de multi-moedas: Ao se cadastrar no sistema o usuário seleciona uma região dentre as opções Brasil, Estados Unidos, Europa ou outros. A depender da região escolhida a API irá direcionar o usuário para moeda real, dolar ou euro. Minha escolha em optar por esse fluxo foi para demonstrar a geração de checkout com varias currencies através do Stripe da forma mais simples e rápida possivel.
 
+- Para acessar a lógica de transferencia de assinatura, é necessário ter um usuário com role de ADMIN
+
 - Os webhooks funcionam sincronizando o status da assinatura atual do banco de dados de acordo o objetivo do evento especifico disparado, a assinatura é considerada válida caso o campo status esteja como ACTIVE e o currentPeriodEnd seja maior que a data de agora.
 
 - Utilizei NestJs como backend por conta da proximidade com o framework, ultimamente tenho tido bastante contato com ele e já tinha um boilerplate pronto de NextJs + NestJs + Prisma com autenticação simples de token JWT com suporte a roles, na correria contra o meu tempo curtissimo optei por ele já pensando em só precisar add o input de região que coloquei no cadastro. Mas outras boas escolhas seriam usar o próprio backend do NextJs com a autenticação via Google usando BetterAuth/NextAuth ou integrar o Clerk como auth provider caso mirasse algo mais robusto em relação a controle de sessões.

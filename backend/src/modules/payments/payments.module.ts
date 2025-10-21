@@ -8,6 +8,8 @@ import { GetStripePricesService } from './use-cases/get-plans/get-plans.service'
 import { GetStripePricesController } from './use-cases/get-plans/get-plans.controller';
 import { GetSubscriptionService } from './use-cases/get-subscription/get-subscription.service';
 import { GetSubscriptionController } from './use-cases/get-subscription/get-subscription.controller';
+import { TransferSubscriptionService } from './use-cases/transfer-subscription/transfer-subscription.service';
+import { TransferSubscriptionController } from './use-cases/transfer-subscription/transfer-subscription.controller';
 
 @Module({
   imports: [DatabaseModule],
@@ -16,12 +18,14 @@ import { GetSubscriptionController } from './use-cases/get-subscription/get-subs
     GenerateBillingPortalService,
     GetStripePricesService,
     GetSubscriptionService,
+    TransferSubscriptionService,
   ],
   controllers: [
     GenerateCheckoutController,
     GenerateBillingPortalController,
     GetStripePricesController,
     GetSubscriptionController,
+    TransferSubscriptionController,
   ],
   exports: [],
 })

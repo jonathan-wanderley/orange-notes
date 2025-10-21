@@ -36,7 +36,8 @@ Dentro da pasta do backend, execute os comandos:
 # Instalar dependências
 pnpm install
 
-# Criar/atualizar as tabelas do banco de dados com base no schema do Prisma
+# Criar as tabelas do banco de dados com base no schema do Prisma
+# Após criar as tabelas no banco de dados, o prisma vai popular automaticamente as roles do sistema executando as seeds
 pnpm prisma migrate deploy
 
 # Iniciar o servidor em modo de desenvolvimento
@@ -80,7 +81,7 @@ O frontend será iniciado (geralmente em http://localhost:3000).
 
 `customer.subscription.deleted` → Cancela assinatura e revoga acesso → ❌ Cancelada
 
-## Features
+## Features implementadas
 
 ### 1. Planos e preços
 
@@ -88,7 +89,7 @@ O frontend será iniciado (geralmente em http://localhost:3000).
 
 - [x] Incluir opções de faturamento anual e mensal.
 
-- [ ] Incluir preços diferentes por país ou moeda (por exemplo, BRL, USD, EUR).
+- [x] Incluir preços diferentes por país ou moeda (por exemplo, BRL, USD, EUR).
 
 ### 2. Checkout e faturamento
 
@@ -102,15 +103,15 @@ O frontend será iniciado (geralmente em http://localhost:3000).
 
 - [x] Tratamento do webhook checkout.session.completed
 
-- [ ] customer.subscription.updated
+- [x] customer.subscription.updated
 
 - [x] Tratamento do webhook invoice.payment_failed
 
 - [x] Tratamento do webhook customer.subscription.deleted
 
-- [ ] Atualize e mantenha adequadamente o status da assinatura em seu banco de dados.
+- [x] Atualize e mantenha adequadamente o status da assinatura em seu banco de dados.
 
-- [ ] Trate as novas tentativas e a idempotência para garantir a confiabilidade.
+- [x] Trate as novas tentativas e a idempotência para garantir a confiabilidade.
 
 ### 4. Limites de recursos
 
@@ -118,4 +119,17 @@ O frontend será iniciado (geralmente em http://localhost:3000).
 
 ### 5. Migração de contas
 
-- [ ] Fluxo administrativo para transferir uma assinatura de uma conta para outra.
+- [x] Fluxo administrativo para transferir uma assinatura de uma conta para outra.
+
+## Notas pessoais
+
+```
+- Lógica de multi-moedas: Ao se cadastrar no sistema o usuário seleciona uma região dentre as opções Brasil, Estados Unidos, Europa ou outros. A depender da região escolhida a API irá direcionar o usuário para moeda real, dolar ou euro. Minha escolha em optar por esse fluxo foi para demonstrar a geração de checkout com varias currencies através do Stripe da forma mais simples e rápida possivel.
+
+- Os webhooks funcionam sincronizando o status da assinatura atual do banco de dados de acordo o objetivo do evento especifico disparado, a assinatura é considerada válida caso o campo status esteja como ACTIVE e o currentPeriodEnd seja maior que a data de agora.
+
+- Utilizei NestJs como backend por conta da proximidade com o framework, ultimamente tenho tido bastante contato com ele e já tinha um boilerplate pronto de NextJs + NestJs + Prisma com autenticação simples de token JWT com suporte a roles, na correria contra o meu tempo curtissimo optei por ele já pensando em só precisar add o input de região que coloquei no cadastro. Mas outras boas escolhas seriam usar o próprio backend do NextJs com a autenticação via Google usando BetterAuth/NextAuth ou integrar o Clerk como auth provider caso mirasse algo mais robusto em relação a controle de sessões.
+
+- Optaria por usar Zustand no projeto, como meu boilerplate já vinha com a ContextAPI na parte de auth, não tive tempo de atualizar isso e segui pelo o que era mais rápido.
+
+```

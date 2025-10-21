@@ -7,7 +7,10 @@ interface ResponseDto {
   checkoutUrl: string;
 }
 
-export default async function createStripeCheckoutAction(planId: string) {
+export default async function createStripeCheckoutAction(
+  planId: string,
+  returnBaseUrl: string
+) {
   const localCookies = await cookies();
   const token = localCookies.get("token")?.value;
 
@@ -24,7 +27,7 @@ export default async function createStripeCheckoutAction(planId: string) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ planId }),
+      body: JSON.stringify({ planId, returnBaseUrl }),
     }
   );
 

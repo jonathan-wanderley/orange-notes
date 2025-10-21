@@ -98,3 +98,19 @@ model Note {
 
   @@map("notes")
 }
+
+
+enum TransferSubscriptionStatus {
+  SUCCESS
+  FAILED
+}
+model TransferSubscriptionLog {
+  id        String   @id @default(uuid())
+  fromUserEmail  String @map("from_user_email")
+  toUserEmail  String @map("to_user_email")
+  status    TransferSubscriptionStatus   @map("status")
+  message   String? @map("message")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("transfer_subscription_logs")
+}

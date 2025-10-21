@@ -70,7 +70,9 @@ export default function PriceCard({ data, currentSubscriptionPriceId }: Props) {
                 <Button
                   type="button"
                   className="w-full cursor-pointer"
-                  onClick={() => createStripeCheckoutAction(data.id)}
+                  onClick={() =>
+                    createStripeCheckoutAction(data.id, window.location.href)
+                  }
                 >
                   Upgrade
                 </Button>

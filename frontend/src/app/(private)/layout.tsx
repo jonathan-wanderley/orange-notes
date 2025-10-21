@@ -20,7 +20,7 @@ export default function PrivateLayout({ children }: Props) {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">
-              <Link href="/" className="flex items-center gap-3">
+              <Link href="/" className="hidden md:flex items-center gap-3">
                 <img
                   src="/orange-logo.png"
                   alt="Orange Notes"
@@ -33,7 +33,7 @@ export default function PrivateLayout({ children }: Props) {
                 </div>
               </Link>
 
-              <nav className="hidden sm:flex items-center gap-1">
+              <nav className="flex items-center gap-1">
                 <Link href="/notes">
                   <Button
                     // variant={

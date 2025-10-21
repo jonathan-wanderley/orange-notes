@@ -37,8 +37,10 @@ Dentro da pasta do backend, execute os comandos:
 pnpm install
 
 # Criar as tabelas do banco de dados com base no schema do Prisma
-# Após criar as tabelas no banco de dados, o prisma vai popular automaticamente as roles do sistema executando as seeds
 pnpm prisma migrate deploy
+
+# Popular as roles do banco de dados com base no arquivo de seed
+pnpm seed
 
 # Iniciar o servidor em modo de desenvolvimento
 pnpm start:dev
